@@ -6,19 +6,19 @@ module.exports = {
 	name: 'ready',
 	once: true,
 	execute(client) {
-		console.log(chalk.cyan('[PteroStats] ') + chalk.green('Bot is up!'))
-		console.log(chalk.cyan('[PteroStats] ') + chalk.green('If you need support you can join our discord server https://discord.gg/zv6maQRah3'))
-		console.log(chalk.cyan('[PteroStats] ') + chalk.yellow('If some node is online but the embed is read as offline, please enable ') + chalk.green('log_error') + chalk.yellow(' on config file and report it at https://discord.gg/zv6maQRah3'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.green('Бот запущен!'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.green('Если вам нужна поддержка, вы можете присоединиться к нашему серверу Discord https://discord.gg/zv6maQRah3'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.yellow('Если какая-то из нод находится в режиме онлайн, но вложение считывается как автономное, включите функцию ') + chalk.green('log_error') + chalk.yellow(' в конфигурационном файле и сообщите об этом в https://discord.gg/zv6maQRah3'))
 
-		if (client.guilds.cache.size < 1) return console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! This bot is not on any discord servers'))
+		if (client.guilds.cache.size < 1) return console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Этого бота нет ни на одном из серверов Discord'))
 		if (client.config.timeout < 1) {
-			console.log(chalk.cyan('[PteroStats] ') + chalk.red('Timeout cannot be less than 1 seconds!'))
+			console.log(chalk.cyan('[PteroStats] ') + chalk.red('Тайм-аут не может быть меньше 1 секунды!'))
 			client.config.timeout = 1
 		}
 
-		if (client.config.refresh > 1 && client.config.refresh < 10) console.log(chalk.cyan('[PteroStats] ') + chalk.red('Refresh Time below 10 seconds is not recommended!'))
+		if (client.config.refresh > 1 && client.config.refresh < 10) console.log(chalk.cyan('[PteroStats] ') + chalk.red('Время обновления менее 10 секунд не рекомендуется!'))
 		else if (client.config.refresh < 1) {
-			console.log(chalk.cyan('[PteroStats] ') + chalk.red('Refresh Time cannot be less than 1 seconds!'))
+			console.log(chalk.cyan('[PteroStats] ') + chalk.red('Время обновления не может быть меньше 1 секунды!'))
 			client.config.refresh = 10
 		}
 

@@ -4,7 +4,7 @@ const chalk = require('chalk')
 module.exports = async function postStatus({ client, panel, nodes }) {
 
 	const channel = await client.channels.cache.get(client.config.channel)
-	if (!channel) return console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid Channel ID'))
+	if (!channel) return console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный идентификатор канала'))
 
 	const files = []
 	const embed = new EmbedBuilder()
@@ -16,7 +16,7 @@ module.exports = async function postStatus({ client, panel, nodes }) {
 
 	if (!client.config.nodes_settings.blacklist) client.config.nodes_settings.blacklist = []
 	if (!Array.isArray(client.config.nodes_settings.blacklist) && Number.isInteger(client.config.nodes_settings.blacklist)) client.config.nodes_settings.blacklist = [client.config.nodes_settings.blacklist]
-	if (client.guilds.cache.size < 1) return console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! This bot is not on any discord servers'))
+	if (client.guilds.cache.size < 1) return console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Этого бота нет ни на одном из серверов Discord'))
 	if (messages && messages.embeds.length < 1) {
 		messages.delete()
 		messages = null
@@ -43,28 +43,28 @@ module.exports = async function postStatus({ client, panel, nodes }) {
 					switch (client.config.nodes_settings.unit.toLowerCase()) {
 						case 'tb':
 							description = description +
-								'\nMemory : ' + Math.floor(data.memory_min / (1024 * 1000)).toLocaleString() + ' TB / ' + Math.floor(data.memory_max / (1024 * 1000)).toLocaleString() + ' TB' +
-								'\nDisk : ' + Math.floor(data.disk_min / (1024 * 1000)).toLocaleString() + ' TB / ' + Math.floor(data.disk_max / (1024 * 1000)).toLocaleString() + ' TB'
+								'\nПамять : ' + Math.floor(data.memory_min / (1024 * 1000)).toLocaleString() + ' TB / ' + Math.floor(data.memory_max / (1024 * 1000)).toLocaleString() + ' TB' +
+								'\nДиск : ' + Math.floor(data.disk_min / (1024 * 1000)).toLocaleString() + ' TB / ' + Math.floor(data.disk_max / (1024 * 1000)).toLocaleString() + ' TB'
 							break;
 						case 'gb':
 							description = description +
-								'\nMemory : ' + Math.floor(data.memory_min / 1024).toLocaleString() + ' GB / ' + Math.floor(data.memory_max / 1024).toLocaleString() + ' GB' +
-								'\nDisk : ' + Math.floor(data.disk_min / 1024).toLocaleString() + ' GB / ' + Math.floor(data.disk_max / 1024).toLocaleString() + ' GB'
+								'\nПамять : ' + Math.floor(data.memory_min / 1024).toLocaleString() + ' GB / ' + Math.floor(data.memory_max / 1024).toLocaleString() + ' GB' +
+								'\nДиск : ' + Math.floor(data.disk_min / 1024).toLocaleString() + ' GB / ' + Math.floor(data.disk_max / 1024).toLocaleString() + ' GB'
 							break;
 						case 'percent':
 							description = description +
-								'\nMemory : ' + Math.floor(data.memory_min / data.memory_max * 100) + ' %' +
-								'\nDisk : ' + Math.floor(data.disk_min / data.disk_max * 100) + ' %'
+								'\nПамять : ' + Math.floor(data.memory_min / data.memory_max * 100) + ' %' +
+								'\nДиск : ' + Math.floor(data.disk_min / data.disk_max * 100) + ' %'
 							break;
 						default:
 							description = description +
-								'\nMemory : ' + data.memory_min.toLocaleString() + ' MB / ' + data.memory_max.toLocaleString() + ' MB' +
-								'\nDisk : ' + data.disk_min.toLocaleString() + ' MB / ' + data.disk_max.toLocaleString() + ' MB'
+								'\nПамять : ' + data.memory_min.toLocaleString() + ' MB / ' + data.memory_max.toLocaleString() + ' MB' +
+								'\nДиск : ' + data.disk_min.toLocaleString() + ' MB / ' + data.disk_max.toLocaleString() + ' MB'
 					}
 
-					if (client.config.nodes_settings.servers) description = description + '\nServers : ' + data.total_servers.toLocaleString()
-					if (client.config.nodes_settings.location) description = description + '\nLocation : ' + data.location
-					if (client.config.nodes_settings.allocations) description = description + '\nAllocations : ' + data.allocations.toLocaleString()
+					if (client.config.nodes_settings.servers) description = description + '\nСерверы : ' + data.total_servers.toLocaleString()
+					if (client.config.nodes_settings.location) description = description + '\nЛокация : ' + data.location
+					if (client.config.nodes_settings.allocations) description = description + '\nРаспределения : ' + data.allocations.toLocaleString()
 
 					description = description + '\n```'
 
@@ -75,14 +75,14 @@ module.exports = async function postStatus({ client, panel, nodes }) {
 					}
 				} else {
 					blacklist = blacklist + 1
-					if (nodes.length - client.config.nodes_settings.blacklist.length < 1) text = '\nThere is no nodes to display'
+					if (nodes.length - client.config.nodes_settings.blacklist.length < 1) text = '\nНет нод для отображения'
 				}
 
 				if (i + 1 === nodes.length) resolve()
 			})
 		} else if (nodes.length < 1) {
 			if (!messages) {
-				text = '\nThere is no nodes to display'
+				text = '\nНет нод для отображения'
 				resolve()
 			} else {
 				if (messages.embeds.length > 0 && client.config.embed.title && messages.embeds[0].data.title === client.config.embed.title) {
@@ -99,16 +99,16 @@ module.exports = async function postStatus({ client, panel, nodes }) {
 
 	stats.then(async () => {
 		const format = await time(new Date(Date.now() + client.config.refresh * 1000), 'R')
-		embed.setDescription(desc.replaceAll('{{time}}', format) + '\n**Nodes Stats [' + Math.floor(nodes.length - blacklist) + ']**' + text)
+		embed.setDescription(desc.replaceAll('{{time}}', format) + '\n**Статистика нод [' + Math.floor(nodes.length - blacklist) + ']**' + text)
 		const EmbedFields = []
 
 		if (client.config.panel_settings.status) {
-			let stats = '**Status:** ' + String(panel.status).replace('true', client.config.status.online).replace('false', client.config.status.offline) + '\n\n'
+			let stats = '**Статус:** ' + String(panel.status).replace('true', client.config.status.online).replace('false', client.config.status.offline) + '\n\n'
 
-			if (client.config.panel_settings.users) stats = stats + 'Users: ' + String(panel.total_users).replace('-1', '`Unknown`') + '\n'
-			if (client.config.panel_settings.servers) stats = stats + 'Servers: ' + String(panel.total_servers).replace('-1', '`Unknown`')
+			if (client.config.panel_settings.users) stats = stats + 'Пользователей: ' + String(panel.total_users).replace('-1', '`Unknown`') + '\n'
+			if (client.config.panel_settings.servers) stats = stats + 'Серверов: ' + String(panel.total_servers).replace('-1', '`Unknown`')
 
-			EmbedFields.push({ name: 'Panel Stats', value: stats })
+			EmbedFields.push({ name: 'Статистика панели', value: stats })
 		}
 
 		if (client.config.embed.field.title && client.config.embed.field.description) EmbedFields.push({ name: client.config.embed.field.title, value: client.config.embed.field.description.replaceAll('{{time}}', format) })
@@ -164,6 +164,6 @@ module.exports = async function postStatus({ client, panel, nodes }) {
 
 		if (!messages) channel.send({ content: content, embeds: [embed], components: row, files: files })
 		else messages.edit({ content: content, embeds: [embed], components: row, files: files })
-		console.log(chalk.cyan('[PteroStats] ') + chalk.green('Stats posted!'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.green('Статистика опубликована!'))
 	})
 }

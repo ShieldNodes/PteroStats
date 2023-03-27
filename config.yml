@@ -1,50 +1,50 @@
-# PteroStats config
-# If you need help, join our discord server here: https://discord.gg/zv6maQRah3
+# Конфигурация PteroStats
+# Если вам нужна помощь, присоединяйтесь к нашему Discord-серверу здесь: https://discord.gg/zv6maQRah3
 
-# Bot Configuration
-token: 'Put bot token here'
+# Конфигурация бота
+token: 'Поместите сюда токен бота'
 presence:
-    text: 'Hosting Panel'
-    type: 'watching' # can be 'watching', 'playing', 'listening', or 'competing'. for 'streaming' is not working for now
-    status: 'online' # can be 'online', 'idle', 'dnd', or 'invisible'
+    text: 'Панель хостинга'
+    type: 'watching' # Может быть 'watch', 'playing', 'listening' или 'competing'. для 'streaming' пока не работает
+    status: 'online' # Может быть 'online', 'idle', 'dnd' или 'invisible'
 
-# Discord Channel and Refresh Time Configuration
-channel: 'Put channel id here'
-refresh: 60 # How much time the bot will refresh the stats
-timeout: 1 # How much time to wait some node to respond to the bot (if you change this, it will add more time to refresh the stats)
+# Настройка канала Discord и времени обновления
+channel: 'Поместите сюда идентификатор канала'
+refresh: 60 # Через сколько времени бот будет обновлять статистику
+timeout: 1 # Сколько времени ждать, пока нода ответит боту (если вы измените это значение, это добавит больше времени для обновления статистики).
 
-# Panel Configuration
+# Конфигурация панели
 panel:
-    url: 'Put panel url here'
-    key: 'Put panel apikey here'
+    url: 'Поместите сюда URL панели'
+    key: 'Поместите сюда API-ключ панели'
 
-# Message and Embed Configuration
-# leave '' if you want to disable option
+# Конфигурация сообщения и вложения
+# оставьте '', если вы хотите отключить опцию
 message:
     content: ''
-    attachment: '' # If you enable attachment on message it upload the attachment first before sending or editing message and it will delay the stats
+    attachment: '' # Если вы включите функцию вложения в сообщение, оно сначала загрузит вложение перед отправкой или редактированием сообщения, что приведет к задержке статистики.
 
 embed:
     title: 'PteroStats'
     color: '5865F2'
-    description: 'Next update {{time}}' # You can use {{time}} to make "in X seconds" time format
-    footer: 'By Hirzi#8701'
+    description: 'Следующее обновление {{time}}' # Вы можете использовать {{time}}, чтобы сделать формат времени "через X секунд".
+    footer: 'От Hirzi#8701 (перевод BlackRandomCraft#0001)'
     timestamp: true
     thumbnail: ''
     image: ''
     field:
         title: ''
-        description: '' # You can use {{time}} to make "in X seconds" time format
+        description: '' # Вы можете использовать {{time}}, чтобы сделать формат времени "через X секунд".
 
-# Message Button Configuration
+# Конфигурация кнопок сообщений
 button:
     enable: true
     btn1:
-        label: 'PteroStats'
+        label: 'Оригинальный PteroStats'
         url: 'https://github.com/HirziDevs/PteroStats'
     btn2:
-        label: ''
-        url: ''
+        label: 'Перевод PteroStats'
+        url: 'https://github.com/ShieldNodes/PteroStats'
     btn3:
         label: ''
         url: ''
@@ -55,33 +55,33 @@ button:
         label: ''
         url: ''
 
-# Status Message Configuration
-# How to use custom emoji: https://github.com/HirziDevs/PteroStats#using-custom-emoji
+# Конфигурация статусного сообщения
+# Как использовать пользовательские эмодзи: https://github.com/HirziDevs/PteroStats#using-custom-emoji
 status:
-    online: ':green_circle: Online'
-    offline: ':red_circle: Offline'
+    online: ':green_circle: Онлайн'
+    offline: ':red_circle: Оффлайн'
 
-# Nodes Settings
-# How to get nodes id: https://github.com/HirziDevs/PteroStats#blacklist-nodes
+# Настройка нод
+# Как получить идентификатор ноды: https://github.com/HirziDevs/PteroStats#blacklist-nodes
 nodes_settings:
-    blacklist: [] # You can add node id to remove the node from status embed (Example: "blacklist: [1]")
-    details: false # enable nodes details like memory and disk
+    blacklist: [] # Вы можете добавить ID ноды, чтобы удалить ноду из статуса (Пример: "blacklist: [1]").
+    details: false # Включить такие детали узла, как память и диск
     servers: true
     location: true
     allocations: true
-    unit: 'gb' # You can use "gb", "mb", "tb", or "percent"
+    unit: 'gb' # Вы можете использовать " gb", "mb", "tb" или "percent".
 
-# Panel Users and Servers Settings
+# Настройки пользователей и серверов панели
 panel_settings:
-    status: true # enable panel stats under nodes stats
+    status: true # Включить статистику панели в разделе статистики нод
     servers: true
     users: true
 
-# Mentions a User or Role if some nodes are offline (this feature is still in testing, please report if you have a problem)
+# Уведомляет пользователя или роль, если некоторые узлы находятся в автономном режиме (эта функция все еще тестируется, пожалуйста, сообщите, если у вас возникли проблемы).
 mentions: # to enable atleast put 1 ID on user or role bellow
-    user: [] # Put User ID here (Example: "user: ['548867757517570058', '816219634390663230']")
-    role: [] # Put Role ID here (Example: "role: ['796083838236622858', '858198863973187585']")
-    channel: '' # Put Channel ID here for the logging
+    user: [] # Поместите сюда идентификатор пользователя (Пример: "user: ['548867757517570058', '816219634390663230']")
+    role: [] # Поместите сюда идентификатор роли (Пример: "role: ['796083838236622858', '858198863973187585']").
+    channel: '' # Поместите сюда ID канала для протоколирования
 
-# Log error to console if server offline (enable this if you have a problem that you wanted to report)
-log_error: false # set to "true" to enable
+# Запись ошибки в консоль, если сервер не в сети (включите эту функцию, если у вас есть проблема, о которой вы хотите сообщить)
+log_error: false # Установите значение "true", чтобы включить

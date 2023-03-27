@@ -8,25 +8,25 @@ module.exports = function checkStatus({ client }) {
 
 	function Embed({ node }) {
 		return new EmbedBuilder()
-			.setTitle('Node Logging') //if you wanted to change this please change at line 175 too
-			.setDescription('`' + node.name + '` is down!')
-			.setFooter({ text: 'Please see console for more details' })
+			.setTitle('Ведение журнала узлов') //Если вы хотите изменить это, пожалуйста, измените и в строке 174
+			.setDescription('`' + node.name + '` не работает!')
+			.setFooter({ text: 'Более подробную информацию см. в консоли' })
 			.setTimestamp()
 			.setColor('ED4245')
 	}
 
 	if (client.config.channel.startsWith('Put')) {
-		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid Channel ID'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный идентификатор канала'))
 		process.exit()
 	} else if (client.config.panel.url.startsWith('Put')) {
-		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid Panel URL'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный URL панели'))
 		process.exit()
 	} else if (client.config.panel.key.startsWith('Put')) {
-		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid Apikey'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный API-ключ'))
 		process.exit()
 	} else if (!client.config.panel.url.startsWith('http')) {
-		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid Panel URL'))
-		console.log(chalk.cyan('[PteroStats] ') + chalk.red('1. Make sure the panel url is starts with "https://" or "http://"'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный URL панели'))
+		console.log(chalk.cyan('[PteroStats] ') + chalk.red('1. Убедитесь, что URL панели начинается с "https://" или "http://"'))
 		process.exit()
 	}
 
@@ -41,7 +41,7 @@ module.exports = function checkStatus({ client }) {
 		total_users: -1,
 	}
 
-	console.log(chalk.cyan('[PteroStats] ') + chalk.green('Getting nodes stats'))
+	console.log(chalk.cyan('[PteroStats] ') + chalk.green('Получение статистики по нодам'))
 
 	const panelStats = new Promise((resolve, reject) => {
 		axios(client.config.panel.url + '/api/application/users', {
@@ -69,15 +69,15 @@ module.exports = function checkStatus({ client }) {
 		}).catch((error) => {
 			if (error.response) {
 				if (error.response.status === 403) {
-					console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid apikey'))
-					console.log(chalk.cyan('[PteroStats] ') + chalk.red('1. Make sure the apikey is from admin page not account page'))
-					console.log(chalk.cyan('[PteroStats] ') + chalk.red('2. Make sure the apikey has read permission on all options'))
-					console.log(chalk.cyan('[PteroStats] ') + chalk.red('3. Make sure the apikey is exist'))
+					console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный API-ключ'))
+					console.log(chalk.cyan('[PteroStats] ') + chalk.red('1. Убедитесь, что API-ключ находится на странице администратора, а не на странице учетной записи'))
+					console.log(chalk.cyan('[PteroStats] ') + chalk.red('2. Убедитесь, что API-ключ имеет права на чтение всех опций'))
+					console.log(chalk.cyan('[PteroStats] ') + chalk.red('3. Убедитесь, что API-ключ существует'))
 				} else if (error.response.status === 404) {
-					console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! Invalid Panel URL'))
-					console.log(chalk.cyan('[PteroStats] ') + chalk.red('1. Make sure the panel url is like "https://panel.example.com"'))
-				} else console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! ' + error))
-			} else console.log(chalk.cyan('[PteroStats] ') + chalk.red('Error! ' + error))
+					console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! Неверный URL панели'))
+					console.log(chalk.cyan('[PteroStats] ') + chalk.red('1. Убедитесь, что URL панели имеет вид "https://panel.shieldnodes.host"'))
+				} else console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! ' + error))
+			} else console.log(chalk.cyan('[PteroStats] ') + chalk.red('Ошибка! ' + error))
 			resolve()
 		})
 	})
@@ -125,14 +125,14 @@ module.exports = function checkStatus({ client }) {
 							body.status = true
 							return statsResolve()
 						}).catch((error) => {
-							if (client.config.log_error) console.log(chalk.cyan('[PteroStats] ') + chalk.yellow('[Node: ' + node.attributes.name + '] ') + chalk.red(error))
+							if (client.config.log_error) console.log(chalk.cyan('[PteroStats] ') + chalk.yellow('[Нода: ' + node.attributes.name + '] ') + chalk.red(error))
 							embeds.push(Embed({ node: body }))
 							body.status = false
 							return statsResolve()
 						})
 						setTimeout(() => {
 							if (body.status === undefined) {
-								if (client.config.log_error) console.log(chalk.cyan('[PteroStats] ') + chalk.yellow('[Node: ' + node.attributes.name + '] ') + chalk.red('Timeout!'))
+								if (client.config.log_error) console.log(chalk.cyan('[PteroStats] ') + chalk.yellow('[Нода: ' + node.attributes.name + '] ') + chalk.red('Тайм-аут!'))
 								embeds.push(Embed({ node: body }))
 								body.status = false
 								return statsResolve()
@@ -153,7 +153,7 @@ module.exports = function checkStatus({ client }) {
 			nodes.sort(function (a, b) { return a.id - b.id })
 			postStatus({ client: client, panel: panel, nodes: nodes })
 
-			// this feature is still in testing
+			// Эта функция все еще находится в стадии тестирования
 			if (client.config.mentions.user.length > 0 || client.config.mentions.role.length > 0 && client.config.mentions.channel) {
 				if (Array.isArray(client.config.mentions.user) || Array.isArray(client.config.mentions.role)) {
 					let mentions = ''
@@ -171,7 +171,7 @@ module.exports = function checkStatus({ client }) {
 
 					const channel = await client.channels.cache.get(client.config.mentions.channel)
 					if (channel) {
-						const messages = await channel.messages.fetch({ limit: 10 }).then(msg => msg.filter(m => m.author.id === client.user.id && m.embeds[0].data.title === 'Node Logging').first())
+						const messages = await channel.messages.fetch({ limit: 10 }).then(msg => msg.filter(m => m.author.id === client.user.id && m.embeds[0].data.title === 'Ведение журнала узлов').first())
 						if (messages) messages.embeds.forEach((MsgEmbed) => {
 							embeds.forEach((embed, i) => {
 								if (MsgEmbed.data.description === embed.data.description) embeds.splice(i, 1)
